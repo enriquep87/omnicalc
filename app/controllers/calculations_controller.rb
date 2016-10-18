@@ -13,7 +13,8 @@ class CalculationsController < ApplicationController
 no_spaces_name=@text.gsub(/\s+/, "")
 
 #For word count
-splits=@text.split(" ")
+text_lower=@text.downcase
+splits=text_lower.split(" ")
 wcount=splits.length.to_s
 
 
@@ -24,7 +25,7 @@ wcount=splits.length.to_s
 
     @word_count = wcount
 
-    @occurrences = splits.count(@special_word)
+    @occurrences = splits.count(@special_word.downcase)
 
     # ================================================================================
     # Your code goes above.
@@ -71,12 +72,12 @@ wcount=splits.length.to_s
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = @ending-@starting
+    @seconds = (@ending-@starting)
     @minutes = @seconds/60
     @hours = @minutes/60
     @days = @hours/24
     @weeks = @days/7
-    @years = @weeks/365
+    @years = @weeks/52
 
     # ================================================================================
     # Your code goes above.
@@ -101,9 +102,12 @@ wcount=splits.length.to_s
 
     @maximum = @numbers.max
 
-    @range = "#{@sorted_numbers.first}-#{@sorted_numbers.last}"
+    @range = @sorted_numbers.last-@sorted_numbers.first
 
-    @median = "Replace this string with your answer."
+@half=@count/2
+@half_int=@half.to_i
+
+    @median = @sorted_numbers[@half_int]
 
     @sum = @numbers.sum
 
@@ -114,7 +118,15 @@ wcount=splits.length.to_s
 
     @standard_deviation = @sorted_numbers
 
-    @mode = @sorted_numbers
+    @most_popular_count = 0
+      @sorted_numbers.each do |snum|
+        if @sorted_numbers.count(snum) > @most_popular_count
+
+          @most_popular_count = @sorted_numbers.count(snum)
+          @most_popular = snum
+        end
+      end
+    @mode = @most_popular
     # ================================================================================
     # Your code goes above.
     # ================================================================================
