@@ -111,10 +111,8 @@ wcount=splits.length.to_s
 
     @variance = "Replace this string with your answer."
 
-mean=@mean
-array=@numbers
 
-    @standard_deviation = [mean-array]**2
+    @standard_deviation = @sorted_numbers
 
     @mode = @sorted_numbers
     # ================================================================================
